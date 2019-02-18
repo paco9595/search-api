@@ -1,5 +1,8 @@
 import { Tag, Empresa } from './../models'
+import bcrypt from 'bcrypt-nodejs'
+import { connection } from './../services/mysqlService'
 // import { connection } from './../services'
+
 const empresas = [{
     id: 0,
     nombre: 'Accenture',
@@ -33,11 +36,15 @@ const empresas = [{
     }]
 }]
 export const getEmpresasAll = (req, res) => {
-    // connection.query('SELECT * FROM `tag`',(err,results,fields)=>{
-    //     console.log(err)
-    //     res.status(200).send(results)
-    // })
-    res.status(200).send(empresas)
+    connection.query(`
+        select empresa.nombre, tag.tag from empresatag 
+            JOIN empresa on empresa.id_empresa = empresatag.id_empresa 
+            JOIN tag on tag.id_tag = empresatag.id_tag
+    `,(err,results,fields)=>{
+        console.log(err)
+        res.status(200).send(results)
+    })
+   // res.status(200).send(empresas)
 }
 
 export const getEmpresa = (req,res) =>{
