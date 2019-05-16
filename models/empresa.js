@@ -1,5 +1,4 @@
 import { attributes } from 'structure'
-import { Tag } from './tag'
 export const Empresa = attributes({
     id: Number,
     nombre: String,

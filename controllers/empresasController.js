@@ -59,4 +59,5 @@ export const updateEmpresa = (req,res)=>{
     const obj = {id,nombre,tel,descripcion, tags}
     var create = new Empresa(obj)
     res.status(200).send(create)
+
 }
