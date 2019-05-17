@@ -72,6 +72,7 @@ export const getVacantesPerUser = (req, res) => {
     relacion.id_Relacion,
     empresa.nombre,
     empresa.logo,
+    empresa.descripcion,
     empresa.rating
     FROM relacion_vacante_usuario AS relacion 
     JOIN estado ON estado.id_estado = relacion.id_estado
