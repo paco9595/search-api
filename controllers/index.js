@@ -1,1 +1,3 @@
-export { getEmpresasAll, getEmpresa, updateEmpresa } from './empresasController'
+export * from './empresasController'
+export * from './userController'
+export * from './vacanteController'
