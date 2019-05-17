@@ -9,6 +9,7 @@ export const allVacantes = (req, res) => {
     area.nombre_area,
     empresa.nombre,
     empresa.rating
+    empresa.logo
     FROM vacante
     JOIN area ON area.id_area=vacante.id_area 
     JOIN	empresa ON empresa.id_empresa=vacante.id_empresa
