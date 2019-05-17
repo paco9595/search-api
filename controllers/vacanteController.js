@@ -9,25 +9,43 @@ export const allVacantes = (req, res) => {
     area.nombre_area,
     empresa.nombre,
     empresa.rating,
-    empresa.logo  
+    empresa.descripcion
     FROM vacante
     JOIN area ON area.id_area=vacante.id_area 
     JOIN	empresa ON empresa.id_empresa=vacante.id_empresa
   `, (err, results) => {
       if (err) {
-        return res.status(500).send({ err, vacantes: 'todas las vacantes' })
+        return res.status(500).send({ vacantes: 'todas las vacantes' })
       }
       res.status(200).send({ vacantes: results })
     })
 }
 export const getVacante = (req, res) => {
   const { id } = req.params
-  connection.query(`SELECT * FROM vacante where id_vacante=${id}`, (err, results) => {
-    if (err) {
-      return res.status(500).send({ err, vacantes: 'todas las vacantes' })
-    }
-    res.status(200).send({ vacante: results[0] })
-  })
+  connection.query(`
+  SELECT
+    vacante.Nombre_puesto,
+    vacante.id_vacante,
+    vacante.Fecha,
+    vacante.descripcion,
+    vacante.skills,
+    empresa.nombre,
+    empresa.telefono,
+    empresa.direccion,
+    empresa.descripcion,
+    empresa.logo,
+    empresa.rating,
+    area.nombre_area
+    FROM vacante
+    JOIN empresa ON empresa.id_empresa=vacante.id_empresa
+    JOIN area ON area.id_area= vacante.id_area
+    WHERE vacante.id_vacante=${id}
+  `, (err, results) => {
+      if (err) {
+        return res.status(500).send({ err, vacantes: 'todas las vacantes' })
+      }
+      res.status(200).send({ vacante: results[0] })
+    })
 }
 export const createVacante = (req, res) => {
   const {
@@ -72,7 +90,6 @@ export const getVacantesPerUser = (req, res) => {
     relacion.id_Relacion,
     empresa.nombre,
     empresa.logo,
-    empresa.descripcion,
     empresa.rating
     FROM relacion_vacante_usuario AS relacion 
     JOIN estado ON estado.id_estado = relacion.id_estado
