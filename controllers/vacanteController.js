@@ -8,14 +8,14 @@ export const allVacantes = (req, res) => {
     vacante.id_empresa,
     area.nombre_area,
     empresa.nombre,
-    empresa.rating
-    empresa.logo
+    empresa.rating,
+    empresa.logo  
     FROM vacante
     JOIN area ON area.id_area=vacante.id_area 
     JOIN	empresa ON empresa.id_empresa=vacante.id_empresa
   `, (err, results) => {
       if (err) {
-        return res.status(500).send({ vacantes: 'todas las vacantes' })
+        return res.status(500).send({ err, vacantes: 'todas las vacantes' })
       }
       res.status(200).send({ vacantes: results })
     })
