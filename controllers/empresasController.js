@@ -1,7 +1,6 @@
 import { Tag, Empresa } from './../models'
 import bcrypt from 'bcrypt-nodejs'
-import { connection } from './../services/mysqlService'
-// import { connection } from './../services'
+import { connection } from './../services'
 
 const empresas = [{
     id: 0,
@@ -40,30 +39,30 @@ export const getEmpresasAll = (req, res) => {
         select empresa.nombre, tag.tag from empresatag 
             JOIN empresa on empresa.id_empresa = empresatag.id_empresa 
             JOIN tag on tag.id_tag = empresatag.id_tag
-    `,(err,results,fields)=>{
-        console.log(err)
-        res.status(200).send(results)
-    })
-   // res.status(200).send(empresas)
+    `, (err, results, fields) => {
+            if (err) return res.status(500).send({ err })
+            res.status(200).send(results)
+        })
+    // res.status(200).send(empresas)
 }
 
-export const getEmpresa = (req,res) =>{
+export const getEmpresa = (req, res) => {
     const { id } = req.params;
-    const empresa = empresas.filter(item=> item.id == id)
+    const empresa = empresas.filter(item => item.id == id)
     res.status(200).send(...empresa)
 }
 
-export const updateEmpresa = (req,res)=>{
-    var { id, nombre, tel, descripcion, tags} = req.query;
-    if (tags){
+export const updateEmpresa = (req, res) => {
+    var { id, nombre, tel, descripcion, tags } = req.query;
+    if (tags) {
         try {
-            var tags = JSON.parse(tags).map(item=> new Tag(item))
+            var tags = JSON.parse(tags).map(item => new Tag(item))
         } catch (error) {
-            res.status(400).send({message: 'bad format array'})
+            res.status(400).send({ message: 'bad format array' })
             return
         }
     }
-    const obj = {id,nombre,tel,descripcion, tags}
+    const obj = { id, nombre, tel, descripcion, tags }
     var create = new Empresa(obj)
     res.status(200).send(create)
 
