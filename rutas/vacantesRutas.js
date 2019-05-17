@@ -10,7 +10,7 @@ import {
 const VacanteRutas = express.Router();
 
 VacanteRutas.get('/', allVacantes)
-VacanteRutas.get('/:id', getVacante)
+VacanteRutas.get('/info/:id/:user', getVacante)
 VacanteRutas.put('/apply/:id_vacante/:id_usuario', applyVacante)
 VacanteRutas.get('/user/:id', getVacantesPerUser)
 VacanteRutas.post('/', createVacante)
