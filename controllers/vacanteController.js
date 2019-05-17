@@ -38,7 +38,6 @@ export const createVacante = (req, res) => {
   res.status(200).send({ user, pass })
 }
 export const applyVacante = (req, res) => {
-  console.log('lel')
   const { id_vacante, id_usuario } = req.params
   res.status(200).send({ id_vacante, id_usuario })
 }

@@ -5,4 +5,4 @@ export const User = attributes({
     tel: String,
     email: String,
     roll: String
-})(class User {})
+})(class User { })
