@@ -44,7 +44,7 @@ export const getVacante = (req, res) => {
     FROM vacante
     JOIN empresa ON empresa.id_empresa=vacante.id_empresa
     JOIN area ON area.id_area= vacante.id_area
-    JOIN relacion_vacante_usuario AS relacion ON relacion.id_vacante=vacante.id_vacante
+    LEFT JOIN relacion_vacante_usuario AS relacion ON relacion.id_vacante=vacante.id_vacante
     WHERE vacante.id_vacante=${id}
   `, (err, results) => {
       if (err) {
