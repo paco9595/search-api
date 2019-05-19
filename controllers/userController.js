@@ -3,7 +3,9 @@ import bcrypt from 'bcrypt-nodejs'
 import { connection } from './../services/db'
 export const login = (req, res) => {
   const { user, pass } = req.query
-
+  if (!user || !pass) {
+    return res.status(400).send({ statusMessage: "bad request" })
+  }
   const us = {
     id_usuario: 1,
     nombre: 'paco',
@@ -11,9 +13,21 @@ export const login = (req, res) => {
     email: "paco",
     rol: 'user',
   }
-  const token = creatToken(us)
-
-  res.status(200).send({ user, pass, token })
+  connection.query(`SELECT 
+    id_usuario, nombre, pass, email, rol, edad, tel
+    FROM usuario 
+    WHERE usuario.email='${user}' AND usuario.pass='${pass}'`
+    , (err, result) => {
+      if (err) {
+        return res.status(500).send({ err, statusMessage: "fatal error" })
+      }
+      if (!result.length) {
+        return res.status(400).send({ statusMessage: "error al ingresar" })
+      }
+      console.log(result)
+      const token = creatToken(result[0])
+      return res.status(200).send({ user: "DONE", token, user: result[0] })
+    })
 }
 export const createUser = (req, res) => {
   let { email, pass, nombre, edad, skills, tel } = req.body
@@ -24,7 +38,6 @@ export const createUser = (req, res) => {
     if (e || !hash) {
       return res.status(500).send({ status: 500, statusMessage: 'server error' })
     }
-    pass = hash
     req.body.cv = 'cv.pdf'
     req.body.img = 'img.png'
     connection.query(`SELECT * FROM usuario where 'email'='${email}'`, (error, results, fields) => {
@@ -36,7 +49,7 @@ export const createUser = (req, res) => {
         connection.query(`
         INSERT INTO usuario 
           (nombre,pass,email,tel,edad,skills)
-          VALUES ('${nombre}','${hash}','${email}','${tel}','${edad}','${skills}')`,
+          VALUES ('${nombre}','${pass}','${email}','${tel}','${edad}','${skills}')`,
           (err, result) => {
             if (err) {
               console.log(err)

@@ -16,7 +16,7 @@ export const allVacantes = (req, res) => {
     JOIN	empresa ON empresa.id_empresa=vacante.id_empresa
   `, (err, results) => {
       if (err) {
-        return res.status(500).send({ vacantes: 'todas las vacantes' })
+        return res.status(500).send({ err, vacantes: 'error todas las vacantes' })
       }
       res.status(200).send({ vacantes: results })
     })
