@@ -3,10 +3,12 @@ export const getAreasCount = (req, res) => {
   connection.query(`
   SELECT 
 	area.*,
-  COUNT(*) AS cantidad
+  COUNT(*)AS cantidad
   FROM area
   LEFT JOIN vacante ON area.id_area = vacante.id_area
-  GROUP BY area.nombre_area
+  GROUP BY area.nombre_area 
+  ORDER BY cantidad DESC 
+  LIMIT 5
   `, (err, results) => {
       if (err) {
         return res.status(500).send({ err, status: 500 })
