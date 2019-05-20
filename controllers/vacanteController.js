@@ -142,11 +142,12 @@ export const empresaVacante = (req, res) => {
     usuario.nombre,
     usuario.tel
   FROM relacion_vacante_usuario AS relacion
-  JOIN vacante ON vacante.id_vacante = relacion.id_vacante
-  JOIN empresa ON empresa.id_empresa = vacante.id_empresa
+  JOIN usuario ON relacion.id_usuario = usuario.id_usuario
+  JOIN estado ON relacion.id_estado = estado.id_estado
+  JOIN relacion_empresa_usuario ON relacion_empresa_usuario.id_usuario = usuario.id_usuario
+  JOIN vacante ON vacante.id_empresa= relacion_empresa_usuario.id_empresa
   JOIN area ON area.id_area= vacante.id_area
-  JOIN usuario ON usuario.id_usuario = relacion.id_usuario
-  WHERE vacante.id_empresa = ${id}`,
+  WHERE relacion.id_usuario =${id}`,
     (err, vacantes) => {
       if (err) {
         return res.status(500).send({ err, vacantes: 'lel' })
