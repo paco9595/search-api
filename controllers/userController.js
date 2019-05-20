@@ -30,7 +30,7 @@ export const login = (req, res) => {
     })
 }
 export const createUser = (req, res) => {
-  let { email, pass, nombre, edad, skills, tel } = req.body
+  let { email, pass, nombre, edad, skill, tel, descripcion } = req.body
   if (!email || !pass || !nombre || !edad || !tel) {
     return res.status(400).send({ status: 400, statusMessage: 'bad request', body: req.body })
   }
@@ -48,8 +48,8 @@ export const createUser = (req, res) => {
         console.log('email', email)
         connection.query(`
         INSERT INTO usuario 
-          (nombre,pass,email,tel,edad,skills)
-          VALUES ('${nombre}','${pass}','${email}','${tel}','${edad}','${skills}')`,
+          (nombre,pass,email,descripcion,tel,edad,skills)
+          VALUES ('${nombre}','${pass}','${email}','${descripcion}','${tel}','${edad}','${skill.toString()}')`,
           (err, result) => {
             if (err) {
               console.log(err)
