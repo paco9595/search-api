@@ -70,18 +70,15 @@ export const createUser = (req, res) => {
 }
 
 export const getUser = (req, res) => {
-  if (req.user._id.toString() == req.params.id) {
-    connection.query(`SELECT * FROM usuario WHERE usuario.id_usuario='${req.params.id}'`,
-      (err, user) => {
-        if (err) {
-          return res.status(500).send({ err, statusMessage: 'dead' })
-        }
-        if (user.length) {
 
-          return res.status(200).send({ user: user[0] })
-        }
-      })
-  } else {
-    return res.status(400).send({ token: req.user, parmas: req.params.id })
-  }
+  connection.query(`SELECT * FROM usuario WHERE usuario.id_usuario='${req.params.id}'`,
+    (err, user) => {
+      console.log('lel')
+      if (err) {
+        res.status(500).send({ err, statusMessage: 'dead' })
+      }
+      if (user) {
+        return res.status(200).send({ user: user[0] })
+      }
+    })
 }

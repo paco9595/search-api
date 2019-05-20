@@ -5,7 +5,7 @@ const userRutas = express.Router();
 
 userRutas.get('/', login)
 userRutas.post('/', createUser)
-userRutas.get('/:id', userAuth, getUser)
+userRutas.get('/:id', getUser)
 
 // userRutas.put('/', updateEmpresa)
 
