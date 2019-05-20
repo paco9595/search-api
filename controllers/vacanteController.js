@@ -141,7 +141,8 @@ export const empresaVacante = (req, res) => {
     usuario.id_usuario,
     usuario.nombre,
     usuario.tel,
-    estado.estado
+    estado.estado,
+    relacion.id_relacion
   FROM relacion_vacante_usuario AS relacion
   JOIN usuario ON relacion.id_usuario = usuario.id_usuario
   JOIN estado ON relacion.id_estado = estado.id_estado
