@@ -6,13 +6,6 @@ export const login = (req, res) => {
   if (!user || !pass) {
     return res.status(400).send({ statusMessage: "bad request" })
   }
-  const us = {
-    id_usuario: 1,
-    nombre: 'paco',
-    edad: 23,
-    email: "paco",
-    rol: 'user',
-  }
   connection.query(`SELECT 
     id_usuario, nombre, pass, email, rol, edad, tel
     FROM usuario 
@@ -54,8 +47,7 @@ export const createUser = (req, res) => {
               console.log(err)
               return res.status(500).send({ status: 500, statusMessage: 'intenarl error' })
             }
-            const token = creatToken(result[0])
-            return res.status(200).send({ user: result[0], token })
+            return res.status(200).send({ user: result[0] })
 
           }
         )
