@@ -45,7 +45,6 @@ export const createUser = (req, res) => {
       if (results.length > 0) {
         return res.status(406).send({ status: 406, statusMessage: 'email ya utilizado' })
       } else {
-        console.log('email', email)
         connection.query(`
         INSERT INTO usuario 
           (nombre,pass,email,descripcion,tel,edad,skills)
@@ -55,8 +54,8 @@ export const createUser = (req, res) => {
               console.log(err)
               return res.status(500).send({ status: 500, statusMessage: 'intenarl error' })
             }
-
-            return res.status(200).send({ result })
+            const token = creatToken(result[0])
+            return res.status(200).send({ user: result[0], token })
 
           }
         )
