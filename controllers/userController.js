@@ -81,6 +81,6 @@ export const getUser = (req, res) => {
         }
       })
   } else {
-    return res.status(500).send({ token: req.user, parmas: req.params.id })
+    return res.status(400).send({ token: req.user, parmas: req.params.id })
   }
 }

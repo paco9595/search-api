@@ -94,6 +94,7 @@ export const getVacantesPerUser = (req, res) => {
     area.nombre_area,
     relacion.id_usuario,
     relacion.id_Relacion,
+    relacion.id_vacante
     empresa.nombre,
     empresa.logo,
     empresa.rating
