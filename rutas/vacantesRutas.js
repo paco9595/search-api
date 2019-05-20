@@ -5,7 +5,8 @@ import {
   applyVacante,
   getVacantesPerUser,
   createVacante,
-  updateStatusVacante
+  updateStatusVacante,
+  empresaVacante
 } from './../controllers'
 const VacanteRutas = express.Router();
 
@@ -15,5 +16,6 @@ VacanteRutas.put('/apply/:id_vacante/:id_usuario', applyVacante)
 VacanteRutas.get('/user/:id', getVacantesPerUser)
 VacanteRutas.post('/', createVacante)
 VacanteRutas.put('/status/:id_relacion/:id_estado', updateStatusVacante)
+VacanteRutas.get('/empresa/:id', empresaVacante)
 
 export default VacanteRutas

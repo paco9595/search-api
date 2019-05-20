@@ -131,3 +131,27 @@ export const deleteVacante = (req, res) => {
   const { id_relacion } = req.params
 
 }
+
+export const empresaVacante = (req, res) => {
+  const { id } = req.params
+  connection.query(
+    `SELECT 
+    vacante.*,
+    area.nombre_area,
+    usuario.id_usuario,
+    usuario.nombre,
+    usuario.tel
+  FROM relacion_vacante_usuario AS relacion
+  JOIN vacante ON vacante.id_vacante = relacion.id_vacante
+  JOIN empresa ON empresa.id_empresa = vacante.id_empresa
+  JOIN area ON area.id_area= vacante.id_area
+  JOIN usuario ON usuario.id_usuario = relacion.id_usuario
+  WHERE vacante.id_empresa = ${id}`,
+    (err, vacantes) => {
+      if (err) {
+        return res.status(500).send({ err, vacantes: 'lel' })
+      }
+      return res.status(200).send({ status: 200, vacantes })
+    }
+  )
+}
