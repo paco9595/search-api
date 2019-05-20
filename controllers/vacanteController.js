@@ -42,8 +42,8 @@ export const getVacante = (req, res) => {
   then 'true'
   else 'false'
  END apply
-  FROM relacion_vacante_usuario AS relacion
-  LEFT JOIN vacante ON relacion.id_vacante=vacante.id_vacante
+  FROM vacante
+  LEFT JOIN relacion_vacante_usuario AS relacion ON relacion.id_vacante=vacante.id_vacante
   JOIN empresa ON empresa.id_empresa=vacante.id_empresa
   JOIN area ON area.id_area= vacante.id_area
   WHERE vacante.id_vacante=${id}
@@ -51,7 +51,7 @@ export const getVacante = (req, res) => {
       if (err) {
         return res.status(500).send({ err, vacantes: 'todas las vacantes' })
       }
-      res.status(200).send({ vacante: results[0] })
+      res.status(200).send({ vacante: results })
     })
 }
 export const createVacante = (req, res) => {
