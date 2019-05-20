@@ -25,27 +25,28 @@ export const getVacante = (req, res) => {
   const { id, user } = req.params
   connection.query(`
   SELECT
-    vacante.Nombre_puesto,
-    vacante.id_vacante,
-    vacante.Fecha,
-    vacante.descripcion,
-    vacante.skills,
-    empresa.nombre,
-    empresa.telefono,
-    empresa.direccion,
-    empresa.descripcion,
-    empresa.logo,
-    empresa.rating,
-    area.nombre_area,
-    case when relacion.id_usuario = ${user}
-    then 'true'
-    else 'false'
-   END apply
-    FROM relacion_vacante_usuario AS relacion
-    LEFT JOIN vacante ON relacion.id_vacante=vacante.id_vacante
-    JOIN empresa ON empresa.id_empresa=vacante.id_empresa
-    JOIN area ON area.id_area= vacante.id_area
-    WHERE vacante.id_vacante=${id} AND relacion.id_usuario=${user}
+  vacante.Nombre_puesto,
+  vacante.id_vacante,
+  vacante.Fecha,
+  vacante.descripcion,
+  vacante.skills,
+  empresa.nombre,
+  empresa.telefono,
+  empresa.direccion,
+  empresa.descripcion,
+  empresa.logo,
+  empresa.rating,
+  relacion.id_usuario,
+  area.nombre_area,
+  case when relacion.id_usuario = ${user}
+  then 'true'
+  else 'false'
+ END apply
+  FROM relacion_vacante_usuario AS relacion
+  LEFT JOIN vacante ON relacion.id_vacante=vacante.id_vacante
+  JOIN empresa ON empresa.id_empresa=vacante.id_empresa
+  JOIN area ON area.id_area= vacante.id_area
+  WHERE vacante.id_vacante=${id}
   `, (err, results) => {
       if (err) {
         return res.status(500).send({ err, vacantes: 'todas las vacantes' })
