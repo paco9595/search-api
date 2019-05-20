@@ -51,7 +51,7 @@ export const getVacante = (req, res) => {
       if (err) {
         return res.status(500).send({ err, vacantes: 'todas las vacantes' })
       }
-      res.status(200).send({ vacante: results })
+      res.status(200).send({ vacante: results[0] })
     })
 }
 export const createVacante = (req, res) => {
