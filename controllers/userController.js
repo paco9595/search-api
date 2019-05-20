@@ -47,11 +47,21 @@ export const createUser = (req, res) => {
               console.log(err)
               return res.status(500).send({ status: 500, statusMessage: 'intenarl error' })
             }
-            return res.status(200).send({ user: result[0] })
-
+            console.log(result)
+            connection.query(`SELECT 
+              id_usuario, nombre, pass, email, rol, edad, tel
+              FROM usuario 
+              WHERE id_usuario = '${result.insertId}'`
+              , (err, r) => {
+                if (err) {
+                  return res.status(500).send({ err, statusMessage: "fatal error" })
+                }
+                console.log(r)
+                const token = creatToken(r[0])
+                return res.status(200).send({ user: "DONE", token, user: r })
+              })
           }
         )
-
       }
     });
 
